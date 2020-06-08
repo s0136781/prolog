@@ -1,0 +1,90 @@
+:-dynamic high/2.
+read_str(A):-get0(X),r_str(X,A,[]).
+r_str(10,A,A):-!.
+r_str(X,A,B):-append(B,[X],B1),get0(X1),r_str(X1,A,B1).
+called_up_r(X,Y):-	repeat, (called_up(X,Y) -> (put(32),write(X),nl,write(Y),write("."),nl,
+				retract(called_up(X,Y))) ;X=nil,Y=nil).
+pr2:-tell('C:/Games/ksar.txt'),called_up_r(X,_),X=nil,told.
+pr3:-see('C:/Games/ksar.txt'),get0(Sym),read_called_up(Sym),seen.
+read_called_up(-1):-!.
+read_called_up(_):-  read_str(Lang),name(X,Lang),read(Y),asserta(called_up(X,Y)),
+				get0(Sym),read_called_up(Sym).
+
+
+called_up(old_camp,0).
+called_up(new_camp,0).
+called_up(xardas,0).
+called_up(nameless,0).
+called_up(swamp_camp,1).
+called_up(uberion,1).
+called_up(korristo,0).
+called_up(talos,1).
+
+died(old_camp,0).
+died(new_camp,0).
+died(xardas,0).
+died(uberion,1).
+died(gomez,1).
+died(sleeping,1).
+died(mad,1).
+died(niko,1).
+
+evil(xardas,0).
+evil(sleeping,1).
+evil(gomez,1).
+evil(uberion,0).
+evil(korristo,0).
+evil(voron,1).
+evil(mad,0).
+evil(krayler,1).
+
+magician(xardas,1).
+magician(mad,0).
+magician(korristo,1).
+magician(gomez,0).
+magician(voron,0).
+magician(diego,0).
+magician(uberion,1).
+magician(torys,0).
+
+swamp(xardas,0).
+swamp(gomez,1).
+swamp(voron,1).
+swamp(swamp_camp,1).
+swamp(mad,0).
+swamp(uberion,1).
+swamp(korristo,2).
+swamp(diego,1).
+
+
+question1(X1):-	write("was the sleeping demon called up?"),nl,
+				write("1. Yes"),nl,
+				write("0. NO"),nl,
+				read(X1).
+
+question2(X2):-	write("did he die after the call?"),nl,
+				write("1. Yes"),nl,
+				write("0. NO"),nl,
+				read(X2).
+
+question3(X3):-	write("did he carry evil?"),nl,
+				write("1. Yes"),nl,
+				write("0. NO"),nl,
+				read(X3).
+
+question4(X4):- write("is he a magician?"),nl,
+	                        write("1. Yes"),nl,
+                                write("0. No"),nl,
+                                read(X4).
+
+question5(X5):- write("was there trade in a swamp?"),nl,
+				write("2. What was this question for?"),nl,
+                                write("1. Yes"),nl,
+				write("0. No"),nl,
+	                        read(X5).
+
+
+
+pr:-	question1(X1),question2(X2),question3(X3),question4(X4),question5(X5),
+		called_up(X,X1),died(X,X2),evil(X,X3),magician(X,X4),swamp(X,X5),
+		write(X).

@@ -1,0 +1,60 @@
+pr5_3:-read_str(A,N),get_words(A,Words,K),max_in_list(Words,Imax),el_no(Uniq_words,Imax,Words),write_str(Words).
+write_list_str([]):-!.
+write_list_str([H|T]):-write_str(H),n1,write_list_str(T).
+uniq_el(Kef,Kes):-uniq_el(Kef,Kes,[]).
+uniq_el([],Res,Res):-!.
+eniq_el([H|T],Res,Res):-!.
+check(E1,[E1|_],Ref,Ref):-!.
+check(E1,[E1|_],Ref,R):-append(Ref,[e1],R),!.
+check(E1,[_|T],Ref,R):-check(E1,T,Ref,R).
+
+count_elems( _,[],[]):-!.
+count_elems(A,[H|T],[Cur|Tail]):-count_el(H,A,Cur),count_elems(A,T,Tail).
+
+count_el(E1,list,Count):-count_cl(E1,list,Count,0).
+count_el(_,[],Count,Count):-!.
+count_el(E1,[E1|T],Count,Cur):-Cur1 is Cur+1,count_el(E1,T,Count,Cur1),!.
+count_el(E1,[_|T],Count,Cur):-count_el(E1,T,Count,Cur).
+
+max_in_list([H|T],Imax):-max(T,H,1,max).
+max_in_list([],_,Cur,_,Cur):-!.
+max_in_list([H|T],Max,Cur,Ind,Imax):-H>Max,Ind1 is Ins+1,max_in_list(T,H,Ind,Ind1,Imax).
+max_in_list([_|T],Max,Cur,Ind,Imax):-Ind1 is Ind+1,max_in_list(T,Max,Cur,Ind1,Imax).
+
+read_str_f(A,N,flag):-get0(X),r_str_f(X,A,[],N,0,flag).
+r_str_f(-1,A,A,N,N,0):-!.
+r_str_f(10,A,A,N,N,1):-!.
+r_str_f(X,A,B,N,K,flag):-K1 is K+1,append(B,[X],B1),get0(X1),r_str_f(X1,A,B1,N,K1,flag).
+
+read_list_str(List,List_len):-r_Str_f(A,N,Flag),r_l_s(List,List_len,[A],[N],Flag).
+r_l_S(List,List_len,List,List_len,0):-!.
+r_l_s(List,List_len,Cur_list,Cur_list_len,_):-r_str_f(A,N,Flag),append(Cur_list,[A],C_l),append(Cur_list_len,[N],C_l_l).
+r_l_s(List,List_len,C_l,C_l_l,Flag).
+pr5_6:-see('c:/Prolog/111.txt'),read_str(A,B),seen,write(A).
+
+
+
+build_all_razm_p:-read_str(A,N),read(K),b_a_rp(A,K,[]).
+b_a_rp(A,0,Perm1):-write_str(Perm1),n1,!,fail.
+b_a_rp(A,N,Perm):-in_list(A,E1),N1 is N-1,b_a_rp(A,N,[E1|Perm]).
+in_list([E1|_],E1).
+in_list([_|T],E1):-in_list(T,E1).
+
+build_All_perm:-read_str(A,N),b_a_r(A,[]).
+in_list_exlude([E1|T],E1,T).
+in_list_exlude([H|T],E1,[H|Tail]):-in_list_exlude(T,E1,Tail).
+b_a_r([],Perm1):-write_str(Perm1),n1,!,fail.
+b_a_r(A,Perm):-in_list_exlude(A,E1,A1),b_a_r(A1,[E1|Perm]).
+
+
+build_All_perm:-read_str(A,N),read(K),b_a_r(A,K,[]).
+b_a_r(A,0,Perm1):-write_str(Perm1),n1,!,fail.
+b_a_r(A,N,Perm):-in_list_exlude(A,E1),N1 is N-1,b_a_r(A,N1,[E1|Perm]).
+
+sub_set([],[]).
+sub_set([H|Sub_set],[H|Set]):-sub_set(Sub_set,Set).
+sub_set(Sub_set,[H|Set]):-sub_set(Sub_set,Set).
+r_list(A,N):-r_list(A,N,0,[]).
+r_list(A,N,N,A):-!.
+r_list(A,N,K,B):-read(X),append(B,[X],B1),K1 is K+1,r_list(A,N,K1,B1).
+
